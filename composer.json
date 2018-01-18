@@ -1,0 +1,27 @@
+{
+    "name": "fratily/reflection",
+    "type": "library",
+    "keywords": ["Fratily", "reflection"],
+    "authors": [
+        {
+            "name": "Kento Oka",
+            "email": "kento.oka@kentoka.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fratily\\Reflection\\": "src/",
+            "Fratily\\ReflectionTest\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit tests/"
+    }
+}
