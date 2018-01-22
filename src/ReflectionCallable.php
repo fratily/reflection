@@ -183,7 +183,7 @@ class ReflectionCallable implements \Reflector{
     
     public function invokeArgs($object = null, array $args = []){
         array_unshift($args, $object);
-        return call_user_func([$this, "invoke"], $args);
+        return call_user_func_array([$this, "invoke"], $args);
     }
     
     public function invokeMapedArgs($object = null, array $params = [], $default = null){
