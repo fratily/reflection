@@ -98,9 +98,13 @@ class ReflectionDocComment implements \Reflector{
     /**
      * Returns the annotations from the doc comment.
      *
-     * @return  string[][]
+     * @return  string[][]|null
      */
     public function getAnnotations(){
+        if($this->reader === null){
+            return null;
+        }
+
         if($this->annotations === null){
             $this->annotations  = [];
 
