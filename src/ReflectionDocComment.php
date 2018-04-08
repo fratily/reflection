@@ -24,7 +24,7 @@ class ReflectionDocComment implements \Reflector{
     private $reader;
 
     /**
-     * @var string[]
+     * @var string[]|null
      */
     private $annotations;
 
