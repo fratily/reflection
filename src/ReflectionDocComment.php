@@ -75,11 +75,11 @@ class ReflectionDocComment implements \Reflector{
      * @return string|null
      */
     public function getSummary(){
-        if($this->reader !== null){
-            return $this->reader->getSummary();
+        if($this->reader === null){
+            return null;
         }
 
-        return null;
+        return $this->reader->getSummary();
     }
 
     /**
@@ -88,11 +88,11 @@ class ReflectionDocComment implements \Reflector{
      * @return string|null
      */
     public function getDescription(){
-        if($this->reader !== null){
-            return $this->reader->getDescription();
+        if($this->reader === null){
+            return null;
         }
 
-        return null;
+        return $this->reader->getDescription();
     }
 
     /**
