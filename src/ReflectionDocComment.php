@@ -109,9 +109,9 @@ class ReflectionDocComment implements \Reflector{
                 $value  = "";
 
                 if(($pos = mb_strpos($annotation, " ")) === false){
-                    $key    = substr($annotation, 1);
+                    $key    = mb_substr($annotation, 1);
                 }else{
-                    $key    = substr($annotation, 1, $pos - 1);
+                    $key    = mb_substr($annotation, 1, $pos - 1);
                     $value  = ltrim(mb_substr($annotation, $pos));
                 }
 
