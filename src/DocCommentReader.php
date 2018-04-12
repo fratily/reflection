@@ -159,7 +159,7 @@ class DocCommentReader{
                     $this->description  .= PHP_EOL . $row;
                     break;
                 case self::ANNOTATIONS:
-                    $annotation .= $row !== "" ? " " . $row : "";
+                    $annotation .= PHP_EOL . $row;
                     break;
             }
         }
