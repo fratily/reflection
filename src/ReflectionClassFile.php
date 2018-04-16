@@ -51,7 +51,7 @@ class ReflectionClassFile implements \Reflector{
     /**
      * Constructor
      *
-     * @param
+     * @param   string|\SplFileInfo $file
      */
     public function __construct($file){
         if($file instanceof \SplFileInfo){
@@ -92,6 +92,12 @@ class ReflectionClassFile implements \Reflector{
         throw new \BadMethodCallException("This method is not supported.");
     }
 
+    /**
+     * ファイルの解析を行う
+     *
+     * @todo    クラスファイルにネームスペース定義がない場合の扱い
+     * @todo    スローする例外
+     */
     private function parse(){
         if(self::$parser === null){
             self::$parser   = (new ParserFactory())
@@ -141,6 +147,7 @@ class ReflectionClassFile implements \Reflector{
     }
 
     /**
+     * ネームスペース名を返す
      *
      * @return  string
      */
@@ -149,6 +156,10 @@ class ReflectionClassFile implements \Reflector{
     }
 
     /**
+     * useで読み込んでいるクラスの別名のリストを返す
+     *
+     * 返り値はクラスもしくはネームスペースの絶対パスをキーとした
+     * エイリアスの連想配列
      *
      * @return  string[]
      */
@@ -157,6 +168,7 @@ class ReflectionClassFile implements \Reflector{
     }
 
     /**
+     * クラス名を返す
      *
      * @return  string
      */
@@ -165,6 +177,7 @@ class ReflectionClassFile implements \Reflector{
     }
 
     /**
+     * このクラスファイルが持つクラスのReflectionClassインスタンスを返す
      *
      * @return  \ReflectionClass
      */
