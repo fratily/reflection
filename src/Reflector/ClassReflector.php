@@ -100,8 +100,12 @@ class ClassReflector{
         $method = $method === null ? "__construct" : $method;
 
         if(!array_key_exists($method, $this->params[$class])){
-            $reflection = $this->getClass($class)->getMethod($method);
-
+            if($method === "__construct" && !method_exists($class, $method)){
+                $reflection = null;
+            }else{
+                $reflection = $this->getClass($class)->getMethod($method);
+            }
+            
             $this->params[$class][$method]  = $reflection === null
                 ? []
                 : $reflection->getParameters()
