@@ -96,6 +96,7 @@ class ClassReflector{
         if(!array_key_exists($class, $this->params)){
             if($method === null){
                 $reflection = $this->getClass($class)->getConstructor();
+                $method     = "__construct";
             }else{
                 $reflection = $this->getClass($class)->getMethod($method);
             }
@@ -106,7 +107,7 @@ class ClassReflector{
             ;
         }
 
-        return $this->params[$class];
+        return $this->params[$class][$method];
     }
 
     /**
