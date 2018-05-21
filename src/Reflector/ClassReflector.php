@@ -89,17 +89,18 @@ class ClassReflector{
             throw new \InvalidArgumentException();
         }
 
-        if($method !== null && !method_exists($class, $method)){
+        $method = $method === null ? "__construct" : $method;
+
+        if(!method_exists($class, $method)){
             throw new \InvalidArgumentException();
         }
 
         if(!array_key_exists($class, $this->params)){
-            if($method === null){
-                $reflection = $this->getClass($class)->getConstructor();
-                $method     = "__construct";
-            }else{
-                $reflection = $this->getClass($class)->getMethod($method);
-            }
+            $this->params[$class]   = [];
+        }
+
+        if(!array_key_exists($method, $this->params[$class])){
+            $reflection = $this->getClass($class)->getMethod($method);
 
             $this->params[$class][$method]  = $reflection === null
                 ? []
