@@ -105,7 +105,7 @@ class ClassReflector{
             }else{
                 $reflection = $this->getClass($class)->getMethod($method);
             }
-            
+
             $this->params[$class][$method]  = $reflection === null
                 ? []
                 : $reflection->getParameters()
@@ -118,6 +118,10 @@ class ClassReflector{
     /**
      * トレイトのリストを取得する
      *
+     * 指定したクラスがuseしているトレイトだけを取得するので、
+     * 継承しているクラスについても調べるのであれば
+     * get_parent_class()と組み合わせて調べる
+     *
      * @param   string  $class
      *
      * @return  string[]
@@ -127,32 +131,37 @@ class ClassReflector{
             throw new \InvalidArgumentException();
         }
 
-        $key    = $class;
+        if(!array_key_exists($class, $this->traits)){
+            $traits     = array_map(
+                function($v){
+                    return false;
+                },
+                array_flip(class_uses($class))
+            );
 
-        if(!array_key_exists($key, $this->traits)){
-            $this->traits[$key] = [];
             do{
-                $this->traits[$key]   = array_merge(
-                    $this->traits[$key],
-                    class_uses($class)
-                );
-            }while($class = get_parent_class($class));
+                $continue   = false;
+                $new        = [];
 
-            $traitsToSearch = $this->traits[$key];
+                foreach($traits as $trait => $flag){
+                    if($flag === false){
+                        $traits[$trait] = true;
 
-            while(!empty($traitsToSearch)){
-                $newTraits          = class_uses(array_pop($traitsToSearch));
-                $this->traits[$key] += $newTraits;
-                $traitsToSearch     += $newTraits;
-            }
+                        foreach(class_uses($trait) as $use){
+                            if(!array_key_exists($use, $traits)){
+                                $continue   = true;
+                                $new[$use]  = false;
+                            }
+                        }
+                    }
+                }
 
-            foreach ($this->traits[$key] as $trait) {
-                $this->traits[$key] += class_uses($trait);
-            }
+                $traits += $new;
+            }while($continue === true);
 
-            $this->traits[$key] = array_unique($this->traits[$key]);
+            $this->traits[$class]   = array_keys($traits);
         }
 
-        return $this->traits[$key];
+        return $this->traits[$class];
     }
 }
