@@ -164,4 +164,34 @@ class ClassReflector{
 
         return $this->traits[$class];
     }
+
+    /**
+     * 指定したクラスが実装しているインターフェースのリストを取得する
+     *
+     * 指定したクラスが継承しているクラスが実装しているインターフェースは
+     * 無視されます。
+     *
+     * @param   string  $class
+     *  クラス名
+     *
+     * @return  string[]
+     */
+    public function getImplements(string $class){
+        if(!class_exists($class)){
+            throw new \InvalidArgumentException();
+        }
+
+        if(false === ($parent = get_parent_class($class))){
+            return array_values(array_unique(class_implements($class)));
+        }
+
+        return array_values(
+            array_unique(
+                array_diff(
+                    class_implements($class),
+                    class_implements($parent)
+                )
+            )
+        );
+    }
 }
