@@ -1,7 +1,8 @@
 {
     "name": "fratily/reflection",
+    "description": "",
     "type": "library",
-    "keywords": ["Fratily", "reflection"],
+    "keywords": ["fratily", "reflection"],
     "authors": [
         {
             "name": "Kento Oka",
@@ -10,19 +11,19 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.0",
-        "nikic/php-parser": "^3.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^6.0"
+        "php": "^7.2",
+        "ext-mbstring": "*"
     },
     "autoload": {
         "psr-4": {
-            "Fratily\\Reflection\\": "src/",
-            "Fratily\\ReflectionTest\\": "tests/"
+            "Fratily\\Reflection\\": "src/"
         }
     },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.4"
+    },
     "scripts": {
-        "test": "phpunit tests/"
+        "phpcs":"phpcs --standard=PSR12 src",
+        "phpcbf":"phpcbf --standard=PSR12 src"
     }
 }
