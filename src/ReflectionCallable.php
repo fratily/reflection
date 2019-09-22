@@ -16,8 +16,8 @@ namespace Fratily\Reflection;
 /**
  *
  */
-class ReflectionCallable{
-
+class ReflectionCallable
+{
     public const TYPE_INVOKABLE_OBJECT          = 0;
     public const TYPE_CLOSURE                   = 1;
     public const TYPE_STRING                    = 2;
@@ -139,7 +139,7 @@ class ReflectionCallable{
                 break;
 
             default:
-                throw new \LogicException;
+                throw new \LogicException();
         }
 
         if (
